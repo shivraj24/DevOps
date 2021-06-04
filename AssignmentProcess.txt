@@ -1,0 +1,56 @@
+
+1) Install PostgreSQL and write a database backup script using bash.
+    
+    -   sudo apt-get install postgresql postgresql-contrib  // install postgresql
+    -   sudo su - postgre   // Switch to postgre user
+    -   touch mypsqlbackup.sh   // Create .sh file which will consist above of backup command
+    -   pg_dump -u root -p database_name | gzip > backup_file_name.gz 
+    -   Executed mypsqlbackup.sh file 
+
+2) Install Mysql and write a database backup script using bash.
+
+    -   sudo apt install mysql-server;
+    -   touch mysqlbackup.sh   // Create .sh file which will consist above of backup command
+    -   mysqldump -u root -p database_name  > backup_file_name.sql 
+    -   Executed mysqlbackup.sh file 
+
+
+3) Install & Configure Wordpress / Magento / Drupal website with nginx proxy. 
+    
+    - sudo su
+    - sudo apt install nginx -y
+    - nano etc/nginx/sites-available/default // Configure nginx 
+    - add above details under server_name in file
+            location = /favicon.ico { log_not_found off; access_log off; }
+            location = /robots.txt { log_not_found off: access_log off; allow all; }
+            location ~* \.(css|gif|ico|jpeg|jpg|js|png)$ { log_not_found off; }
+    - add above details inside location /{ ........}  then save file
+            try_files $uri $uri/ /index.php$is_args$args;
+    - create a wordpress database using mysql
+            CREATE DATABASE wordpress DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci; //run following command to create database 
+    - Configure wordpress using below command
+            wget -c https://wordpress.org/latest.tar.gz
+            tar xzvf latest.tar.gz
+            cp wordpress/wp-config-sample.php wordpress/wp-config.php
+            mv wordpress/* /var/www/html
+            sudo chown -R www-data:www-data /var/www/html
+    - Configure wp-config.php file 
+            nano /var/www/html/wp-config.php
+            set DB_name ,DB_user, DB_passowrd then save
+
+
+4) Install nginx, php-fpm & mysql to load the following php code. Git clone https://github.com/taniarascia/pdo/  
+    - sudo su 
+    - sudo apt install nginx -y
+    - sudo add-apt-repository ppa:ondrej/php
+    - sudo apt install php7.4-fpm php7.4-common php7.4-mysql php7.4-xml -y
+
+
+6)Install Docker and create an image of your current running application.
+
+        -   sudo apt install docker.io
+            Create Docker file in the respective Project Folder
+        -   docker build -t tut:php11 /${path of docker file}
+        -   docker run -p 8000:80 -d tut:php11 
+
+
