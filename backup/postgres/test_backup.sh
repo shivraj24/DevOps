@@ -1,4 +1,4 @@
 #!/bin/bash
 
-pg_dump -u root -p test_data | gzip > testapp_backup2.gz
+pg_dump -U postgres -W -F t my_database | gzip > my_backup2.gz
 
